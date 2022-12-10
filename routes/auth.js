@@ -69,7 +69,7 @@ router.post("/edit-profile", ensureAuthenticated, async (req, res) => {
 
 router.get("/login", (req, res) => {
     try {
-        return res.render("Login", { req, layout: false })
+        return res.render("login", { req, layout: false })
     } catch (err) {
         console.log(err);
         return res.redirect("/login")
