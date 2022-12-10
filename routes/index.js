@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const Admin = require("../models/Admin");
 const Material = require("../models/Material");
 const Department = require("../models/Department");
 const Result = require("../models/Result");
@@ -10,7 +9,8 @@ const csv = require('csvtojson');
 const path = require("path")
 const getGrade = require("../utils/getGrade");
 const calculate_gpa = require('../utils/gpaCalculator');
-const { ensureAuthenticated } = require("../config/auth")
+const { ensureAuthenticated } = require("../config/auth");
+const fs = require("fs");
 
 router.get("/", ensureAuthenticated, async (req, res) => {
     try {
@@ -18,7 +18,7 @@ router.get("/", ensureAuthenticated, async (req, res) => {
         const materials = (await Material.find({})).reverse();
         const departments = (await Department.find({})).reverse();
 
-        return res.render("index", { page_title: "Welcome", students, materials, departments, req });
+        return res.render("index", { page_title: "EDUSOP | Welcome", students, materials, departments, req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -29,7 +29,7 @@ router.get("/", ensureAuthenticated, async (req, res) => {
 router.get("/students", ensureAuthenticated, async (req, res) => {
     try {
         const students = (await User.find({})).reverse();
-        return res.render("students", { page_title: "Students", students, req });
+        return res.render("students", { page_title: "EDUSOP | Students", students, req });
 
     } catch (err) {
         console.log(err);
@@ -47,7 +47,7 @@ router.get("/students/:id", ensureAuthenticated, async (req, res) => {
         const resultsArr = [];
 
         if (results.length === 0) {
-            return res.render("student", { page_title: "Student Profile", student, results: [], calculate_gpa, req });
+            return res.render("student", { page_title: "EDUSOP | Student Profile", student, results: [], calculate_gpa, req });
         }
 
         results.forEach(r => {
@@ -61,7 +61,7 @@ router.get("/students/:id", ensureAuthenticated, async (req, res) => {
         Object.keys(resultobj).forEach((key, index, arr) => {
             resultsArr.push(resultobj[key])
             if ((index + 1) == arr.length) {
-                return res.render("student", { page_title: "Student Profile", student, results: resultsArr.reverse(), calculate_gpa, req });
+                return res.render("student", { page_title: "EDUSOP | Student Profile", student, results: resultsArr.reverse(), calculate_gpa, req });
             }
         });
 
@@ -134,7 +134,7 @@ router.get("/delete-student/:id", ensureAuthenticated, async (req, res) => {
 
 router.get("/add-students", ensureAuthenticated, (req, res) => {
     try {
-        return res.render("addStudents", { page_title: "Register Students", req });
+        return res.render("addStudents", { page_title: "EDUSOP | Register Students", req });
 
     } catch (err) {
         console.log(err);
@@ -146,22 +146,22 @@ router.post("/add-one-student", ensureAuthenticated, async (req, res) => {
     try {
         const { firstname, middlename, lastname, department, matno, level, phone, email, password } = req.body;
         if (!firstname || !lastname || !matno || !department || !level || !phone || !email || !password) {
-            return res.render("addStudents", { page_title: "Register Students", req, ...req.body, error_msg: "Please fill all fields" });
+            return res.render("addStudents", { page_title: "EDUSOP | Register Students", req, ...req.body, error_msg: "Please fill all fields" });
         }
 
         if (matno.length !== 10) {
-            return res.render("addStudents", { page_title: "Register Students", req, ...req.body, error_msg: "Invalid Matno" });
+            return res.render("addStudents", { page_title: "EDUSOP | Register Students", req, ...req.body, error_msg: "Invalid Matno" });
         }
 
         if (phone.length !== 11) {
-            return res.render("addStudents", { page_title: "Register Students", req, ...req.body, error_msg: "Invalid phone number" });
+            return res.render("addStudents", { page_title: "EDUSOP | Register Students", req, ...req.body, error_msg: "Invalid phone number" });
         }
 
         const userExists = await User.findOne({ email });
         const userExists2 = await User.findOne({ matno: matno.toUpperCase() });
 
         if (userExists || userExists2) {
-            return res.render("addStudents", { page_title: "Register Students", req, ...req.body, error_msg: "Student with that email or matno already exists" });
+            return res.render("addStudents", { page_title: "EDUSOP | Register Students", req, ...req.body, error_msg: "Student with that email or matno already exists" });
         }
 
         const newStudent = {
@@ -186,7 +186,7 @@ router.post("/add-one-student", ensureAuthenticated, async (req, res) => {
         return res.redirect("/add-students");
     } catch (err) {
         console.log(err);
-        return res.render("addStudents", { page_title: "Register Students", req, ...req.body, error_msg: "Internal server error" });
+        return res.render("addStudents", { page_title: "EDUSOP | Register Students", req, ...req.body, error_msg: "Internal server error" });
     }
 });
 
@@ -199,17 +199,17 @@ router.post("/add-many-students", ensureAuthenticated, async (req, res) => {
         const { department, level } = req.body;
         if (!department || !level || !req.files.csv) {
             return res.render("addStudents", {
-                page_title: "Register Students", req, ...req.body,
+                page_title: "EDUSOP | Register Students", req, ...req.body,
                 error_msg: "Fill all required fields"
             });
         }
 
         if (!req.files.csv) {
-            return res.render("addStudents", { page_title: "Register Students", ...req.body, error_msg: "Please upload a valid csv file", req });
+            return res.render("addStudents", { page_title: "EDUSOP | Register Students", ...req.body, error_msg: "Please upload a valid csv file", req });
         }
 
         if (req.files.csv.mimetype !== "text/csv") {
-            return res.render("addStudents", { page_title: "Register Students", ...req.body, error_msg: "Please upload a valid csv file", req });
+            return res.render("addStudents", { page_title: "EDUSOP | Register Students", ...req.body, error_msg: "Please upload a valid csv file", req });
         }
 
 
@@ -222,7 +222,7 @@ router.post("/add-many-students", ensureAuthenticated, async (req, res) => {
 
         if (!firstname || !lastname || !phone || !email || !matno || !password) {
             return res.render("addStudents", {
-                page_title: "Register Students", req, ...req.body,
+                page_title: "EDUSOP | Register Students", req, ...req.body,
                 error_msg: "Include all required columns in csv and make sure they are lowercase"
             });
         }
@@ -249,20 +249,25 @@ router.post("/add-many-students", ensureAuthenticated, async (req, res) => {
                 }
             }
             if ((index + 1) === jsonArray.length) {
-                req.flash("success_msg", `Operation completed, Total registered: ${success_counter}, Already Exists: ${exists_counter}, Failed registered: ${failed_counter}.`)
-                return res.redirect("/add-students");
+                req.flash("success_msg", `Operation completed, Total registered: ${success_counter}, Already Exists: ${exists_counter}, Failed registered: ${failed_counter}.`);
+                fs.unlink(csvFilePath, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    return res.redirect("/add-students");
+                });
             }
         });
     } catch (err) {
         console.log(err);
-        return res.render("addStudents", { page_title: "Register Students", req, ...req.body, error_msg: "Internal server error" });
+        return res.render("addStudents", { page_title: "EDUSOP | Register Students", req, ...req.body, error_msg: "Internal server error" });
     }
 })
 
 router.get("/materials", ensureAuthenticated, async (req, res) => {
     try {
         const materials = await Material.find({});
-        return res.render("materials", { page_title: "Materials", materials, req });
+        return res.render("materials", { page_title: "EDUSOP | Materials", materials, req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -271,7 +276,7 @@ router.get("/materials", ensureAuthenticated, async (req, res) => {
 
 router.get("/add-material", ensureAuthenticated, (req, res) => {
     try {
-        return res.render("addMaterial", { page_title: "Upload Materials", req });
+        return res.render("addMaterial", { page_title: "EDUSOP | Upload Materials", req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -282,7 +287,7 @@ router.post("/add-material", ensureAuthenticated, async (req, res) => {
     try {
         const { name, level, department, semester, file } = req.body;
         if (!name || !level || !department || !semester || !file) {
-            return res.render("addMaterial", { page_title: "Upload Materials", ...req.body, error_msg: "Please enter all fields", req });
+            return res.render("addMaterial", { page_title: "EDUSOP | Upload Materials", ...req.body, error_msg: "Please enter all fields", req });
         }
         const newMat = {
             name,
@@ -299,13 +304,13 @@ router.post("/add-material", ensureAuthenticated, async (req, res) => {
         return res.redirect("/add-material");
     } catch (err) {
         console.log(err);
-        return res.render("addMaterial", { page_title: "Upload Materials", ...req.body, error_msg: "Internal server error", req });
+        return res.render("addMaterial", { page_title: "EDUSOP | Upload Materials", ...req.body, error_msg: "Internal server error", req });
     }
 })
 
 router.get("/departments", ensureAuthenticated, (req, res) => {
     try {
-        return res.render("departments", { page_title: "Departments", req });
+        return res.render("departments", { page_title: "EDUSOP | Departments", req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -315,7 +320,7 @@ router.get("/departments", ensureAuthenticated, (req, res) => {
 router.get("/results", ensureAuthenticated, async (req, res) => {
     try {
         const results = (await ResultList.find({})).reverse();
-        return res.render("results", { page_title: "Results", results, req });
+        return res.render("results", { page_title: "EDUSOP | Results", results, req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -357,7 +362,7 @@ router.get("/results/:session1/:session2/:course/:level/:semester", ensureAuthen
             semester: semester.toLowerCase()
         })).reverse();
 
-        return res.render("viewResults", { page_title: "Results", results, id: resultlist._id, req });
+        return res.render("viewResults", { page_title: "EDUSOP | Results", results, id: resultlist._id, req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -366,7 +371,7 @@ router.get("/results/:session1/:session2/:course/:level/:semester", ensureAuthen
 
 router.get("/add-results", ensureAuthenticated, (req, res) => {
     try {
-        return res.render("addResults", { page_title: "Upload Results", req });
+        return res.render("addResults", { page_title: "EDUSOP | Upload Results", req });
 
     } catch (err) {
         console.log(err);
@@ -393,15 +398,15 @@ router.post("/add-results", ensureAuthenticated, async (req, res) => {
         const resultfile = req.files.csv;
 
         if (!course || !department || !level || !semester || !session || !credit) {
-            return res.render("addResults", { page_title: "Upload Results", ...req.body, error_msg: "Please provide all reuired fields", req });
+            return res.render("addResults", { page_title: "EDUSOP | Upload Results", ...req.body, error_msg: "Please provide all reuired fields", req });
         };
 
         if (!resultfile) {
-            return res.render("addResults", { page_title: "Upload Results", ...req.body, error_msg: "Please upload csv file", req });
+            return res.render("addResults", { page_title: "EDUSOP | Upload Results", ...req.body, error_msg: "Please upload csv file", req });
         }
 
         if (resultfile.mimetype !== "text/csv") {
-            return res.render("addResults", { page_title: "Upload Results", ...req.body, error_msg: "Please upload a valid csv file", req });
+            return res.render("addResults", { page_title: "EDUSOP | Upload Results", ...req.body, error_msg: "Please upload a valid csv file", req });
         }
 
         const csvFilePath = path.join(__dirname, "../", req.files.csv.tempFilePath);
@@ -412,11 +417,11 @@ router.post("/add-results", ensureAuthenticated, async (req, res) => {
         const resultshape = jsonArray[0];
 
         if (!resultshape) {
-            return res.render("addResults", { page_title: "Upload Results", ...req.body, error_msg: "CSV file must not be empty", req });
+            return res.render("addResults", { page_title: "EDUSOP | Upload Results", ...req.body, error_msg: "CSV file must not be empty", req });
         }
 
         if (!resultshape.matno || !resultshape.score) {
-            return res.render("addResults", { page_title: "Upload Results", ...req.body, error_msg: "Must contain matno and socre heading", req });
+            return res.render("addResults", { page_title: "EDUSOP | Upload Results", ...req.body, error_msg: "Must contain matno and socre heading", req });
         }
 
         const resultListExists = await ResultList.findOne({ course: course.toUpperCase(), session, level, semester });
@@ -478,8 +483,14 @@ router.post("/add-results", ensureAuthenticated, async (req, res) => {
                 }
             }
             if ((index + 1) === jsonArray.length) {
-                req.flash("success_msg", `Operation completed, Total added: ${success_counter}, Toal updated: ${updated_counter}, Failed uploads: ${failed_counter}.`);
-                return res.redirect("/add-results");
+                fs.unlink(csvFilePath, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    req.flash("success_msg", `Operation completed, Total added: ${success_counter}, Toal updated: ${updated_counter}, Failed uploads: ${failed_counter}.`);
+                    return res.redirect("/add-results");
+                });
+
             }
         });
     } catch (err) {

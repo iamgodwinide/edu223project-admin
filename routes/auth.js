@@ -7,7 +7,7 @@ const { ensureAuthenticated } = require("../config/auth")
 
 router.get("/change-password", ensureAuthenticated, async (req, res) => {
     try {
-        return res.render("changePassword", { page_title: "Change Password", req });
+        return res.render("changePassword", { page_title: "EDUSOP | Change Password", req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
@@ -44,7 +44,7 @@ router.post("/change-password", ensureAuthenticated, async (req, res) => {
 
 router.get("/edit-profile", ensureAuthenticated, async (req, res) => {
     try {
-        return res.render("editProfile", { page_title: "Edit Profile", req });
+        return res.render("editProfile", { page_title: "EDUSOP | Edit Profile", req });
     } catch (err) {
         console.log(err);
         return res.redirect("/")
