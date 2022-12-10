@@ -1,0 +1,65 @@
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <h2 class="mb-2">Upload A Instructional Material</h2>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body card-block">
+                            <form method="post">
+                                <%- include("./partials/messages") %>
+                                    <div class="form-group">
+                                        <label for="fname" class=" form-control-label">Name</label>
+                                        <input type="text" name="name" id="fname" placeholder="Name of Material"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="matno" class=" form-control-label">Department</label>
+                                        <select class="form-control" name="department" required>
+                                            <option>select</option>
+                                            <option value="ADT">ADT</option>
+                                            <option value="CIT">CIT</option>
+                                            <option value="DEF">DEF</option>
+                                            <option value="DEM">DEM</option>
+                                            <option value="EECP">EECP</option>
+                                            <option value="HSE">HSE</option>
+                                            <option value="HKS">HKS</option>
+                                            <option value="VTE">VTE</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="matno" class=" form-control-label">Level</label>
+                                        <select class="form-control" name="level" required>
+                                            <option value="">select</option>
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="300">300</option>
+                                            <option value="400">400</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="matno" class=" form-control-label">Semester</label>
+                                        <select class="form-control" name="semester" required>
+                                            <option value="">select</option>
+                                            <option value="First">First Semester</option>
+                                            <option value="Second">Second Semester</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="file" class=" form-control-label">Link to Material File(eg. Google
+                                            drive)</label>
+                                        <input type="text" name="file" id="file"
+                                            placeholder="Link to download material, eg. Google Drive"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success">Upload</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

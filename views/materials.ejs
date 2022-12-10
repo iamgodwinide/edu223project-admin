@@ -1,0 +1,49 @@
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="mb-5">Materials</h1>
+                    <div class="table-responsive table--no-card m-b-30 p-3">
+                        <table class="table table-borderless table-striped table-earning" id="students">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Name</th>
+                                    <th class="text-left">Department</th>
+                                    <th class="text-left">Level</th>
+                                    <th class="text-left">Semester</th>
+                                    <th class="text-left">Uploaded by</th>
+                                    <th class="text-left">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% materials.map(m=> {%>
+                                    <tr>
+                                        <td class="text-left">
+                                            <%= m.name %>
+                                        </td>
+                                        <td class="text-left">
+                                            <%= m.department %>
+                                        </td>
+                                        <td class="text-left">
+                                            <%= m.level %>L
+                                        </td>
+                                        <td class="text-left">
+                                            <%= m.semester %>
+                                        </td>
+                                        <td class="text-left">
+                                            <%= m.author %>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-secondary">View</a>
+                                        </td>
+                                    </tr>
+                                    <%})%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

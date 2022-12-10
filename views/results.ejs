@@ -1,0 +1,59 @@
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="mb-5">Results</h1>
+                    <div class="table-responsive table--no-card m-b-30 p-3">
+                        <%- include("./partials/messages") %>
+                            <table class="table table-borderless table-striped table-earning" id="students">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Session</th>
+                                        <th class="text-left">Course</th>
+                                        <th class="text-left">Credit Unit</th>
+                                        <th class="text-left">Department</th>
+                                        <th class="text-left">Level</th>
+                                        <th class="text-left">Semester</th>
+                                        <th class="text-left">Uploaded by</th>
+                                        <th class="text-left">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% results.map(r=> {%>
+                                        <tr>
+                                            <td class="text-left">
+                                                <%= r.session %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.course %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.credit %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.department %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.level %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.semester %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.author %>
+                                            </td>
+                                            <td>
+                                                <a href="/results/<%= r.session %>/<%= r.course %>/<%= r.level %>/<%= r.semester %>"
+                                                    class="btn btn-secondary">View Results</a>
+                                            </td>
+                                        </tr>
+                                        <%})%>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

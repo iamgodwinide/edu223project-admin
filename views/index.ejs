@@ -1,0 +1,133 @@
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <h1>Welcome, <%= req.user.fullname %>
+            </h1>
+            <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-4">
+                    <div class="overview-item overview-item--c1">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="text">
+                                    <h2>
+                                        <%= students.length %>
+                                    </h2>
+                                    <span>Students</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="text">
+                                    <h2>
+                                        <%= materials.length %>
+                                    </h2>
+                                    <span>Materials</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="title-1 m-b-25">Students</h2>
+                    <div class="table-responsive table--no-card m-b-40 p-3">
+                        <table class="table table-borderless table-striped table-earning" id="students">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Full Name</th>
+                                    <th class="text-left">Mat No</th>
+                                    <th class="text-left">Level</th>
+                                    <th class="text-left">Department</th>
+                                    <th class="text-left">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% students.map(st=> {%>
+                                    <tr>
+                                        <td class="text-left">
+                                            <a href="/students/<%=st._id%>">
+                                                <%= st.firstname + " " + st.middlename + " " + st.lastname %>
+                                            </a>
+                                        </td>
+                                        <td class="text-left">
+                                            <%= st.matno %>
+                                        </td>
+                                        <td class="text-left">
+                                            <%= st.level %>
+                                        </td>
+                                        <td class="text-left">
+                                            <%= st.department %>
+                                        </td>
+                                        <td>
+                                            <a href="/students/<%=st._id%>" class="btn btn-secondary">View</a>
+                                        </td>
+                                    </tr>
+                                    <%})%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <h2 class="title-1 m-b-25">Instructional Materials</h2>
+                    <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
+                        <div class="au-card-inner">
+                            <div class="table-responsive p-3">
+                                <table class="table table-top-countries">
+                                    <tbody>
+                                        <tr>
+                                            <td>Course</td>
+                                            <td>Department</td>
+                                            <td>Level</td>
+                                            <td>Semester</td>
+                                            <td></td>
+                                        </tr>
+                                        <% materials.map(mat=> {%>
+                                            <tr>
+                                                <td>
+                                                    <%= mat.name %>
+                                                </td>
+                                                <td>
+                                                    <%= mat.department %>
+                                                </td>
+                                                <td>
+                                                    <%= mat.level %>
+                                                </td>
+                                                <td>
+                                                    <%= mat.semester %> Semester
+                                                </td>
+                                                <td class="text-right">
+                                                    <a href="/" class="btn btn-info">View</a>
+                                                </td>
+                                            </tr>
+                                            <%})%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2022 . All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
