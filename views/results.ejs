@@ -1,6 +1,6 @@
 <div class="main-content">
     <div class="section__content section__content--p30">
-        <div class="container-fluid">
+        <div class="container-fluid bg-white p-3">
             <div class="row">
                 <div class="col-12">
                     <h1 class="mb-5">Results</h1>
@@ -10,11 +10,11 @@
                                 <thead>
                                     <tr>
                                         <th class="text-left">Session</th>
+                                        <th class="text-left">Level</th>
+                                        <th class="text-left">Semester</th>
                                         <th class="text-left">Course</th>
                                         <th class="text-left">Credit Unit</th>
                                         <th class="text-left">Department</th>
-                                        <th class="text-left">Level</th>
-                                        <th class="text-left">Semester</th>
                                         <th class="text-left">Uploaded by</th>
                                         <th class="text-left">Action</th>
                                     </tr>
@@ -26,6 +26,12 @@
                                                 <%= r.session %>
                                             </td>
                                             <td class="text-left">
+                                                <%= r.level %>
+                                            </td>
+                                            <td class="text-left">
+                                                <%= r.semester %>
+                                            </td>
+                                            <td class="text-left">
                                                 <%= r.course %>
                                             </td>
                                             <td class="text-left">
@@ -33,12 +39,6 @@
                                             </td>
                                             <td class="text-left">
                                                 <%= r.department %>
-                                            </td>
-                                            <td class="text-left">
-                                                <%= r.level %>
-                                            </td>
-                                            <td class="text-left">
-                                                <%= r.semester %>
                                             </td>
                                             <td class="text-left">
                                                 <%= r.author %>

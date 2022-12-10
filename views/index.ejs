@@ -1,7 +1,7 @@
 <!-- MAIN CONTENT-->
 <div class="main-content">
     <div class="section__content section__content--p30">
-        <div class="container-fluid">
+        <div class="container-fluid bg-white p-3">
             <h1>Welcome, <%= req.user.fullname %>
             </h1>
             <div class="row m-t-25">
@@ -79,45 +79,6 @@
                                     <%})%>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <h2 class="title-1 m-b-25">Instructional Materials</h2>
-                    <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
-                        <div class="au-card-inner">
-                            <div class="table-responsive p-3">
-                                <table class="table table-top-countries">
-                                    <tbody>
-                                        <tr>
-                                            <td>Course</td>
-                                            <td>Department</td>
-                                            <td>Level</td>
-                                            <td>Semester</td>
-                                            <td></td>
-                                        </tr>
-                                        <% materials.map(mat=> {%>
-                                            <tr>
-                                                <td>
-                                                    <%= mat.name %>
-                                                </td>
-                                                <td>
-                                                    <%= mat.department %>
-                                                </td>
-                                                <td>
-                                                    <%= mat.level %>
-                                                </td>
-                                                <td>
-                                                    <%= mat.semester %> Semester
-                                                </td>
-                                                <td class="text-right">
-                                                    <a href="/" class="btn btn-info">View</a>
-                                                </td>
-                                            </tr>
-                                            <%})%>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

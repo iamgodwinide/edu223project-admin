@@ -290,7 +290,7 @@ router.post("/add-material", ensureAuthenticated, async (req, res) => {
             department,
             semester,
             file,
-            author: "Godwin Idemudia"
+            author: req.user.fullname
         };
 
         const newDoc = new Material(newMat);
@@ -434,7 +434,7 @@ router.post("/add-results", ensureAuthenticated, async (req, res) => {
                 semester,
                 session,
                 credit,
-                author: "Godwin Idemudia"
+                author: req.user.fullname
             };
 
             const newResultListDoc = new ResultList(newResultList);
