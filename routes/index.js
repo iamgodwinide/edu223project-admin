@@ -46,6 +46,10 @@ router.get("/students/:id", ensureAuthenticated, async (req, res) => {
         const resultobj = {};
         const resultsArr = [];
 
+        if (results.length === 0) {
+            return res.render("student", { page_title: "Student Profile", student, results: [], calculate_gpa, req });
+        }
+
         results.forEach(r => {
             if (resultobj[r.session + r.semester]) {
                 resultobj[r.session + r.semester].push(r);
@@ -114,6 +118,17 @@ router.post("/students/:id", ensureAuthenticated, async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.redirect("/")
+    }
+})
+
+router.get("/delete-student/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await User.deleteOne({ _id: id });
+        return res.redirect("/students");
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/");
     }
 })
 

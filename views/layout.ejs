@@ -59,15 +59,87 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="has-sub">
+                        <li>
+                            <a href="/">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        </li>
+                        <li class="active has-sub">
                             <a class="js-arrow" href="/#">
-                                <i class="fas fa-tachometer-alt"></i>Students</a>
+                                <i class="fas fa-users"></i>Students</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="/index.html">All Students</a>
+                                    <a href="/students">
+                                        <i class="fas fa-users"></i>
+                                        Students</a>
                                 </li>
                                 <li>
-                                    <a href="/index2.html">Add Student</a>
+                                    <a href="/add-students">
+                                        <i class="fas fa-plus"></i>
+                                        Register Student</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="/#">
+                                <i class="far fa-clipboard"></i>Materials</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="/materials">
+                                        <i class="far fa-clipboard"></i>
+                                        Materials</a>
+                                </li>
+                                <li>
+                                    <a href="/add-material">
+                                        <i class="fas fa-plus"></i>
+                                        Upload Material</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- <li class="active has-sub">
+                            <a class="js-arrow" href="/#">
+                                <i class="fas fa-university"></i>Departments</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="/departments">
+                                        <i class="fas fa-university"></i>
+                                        Departments</a>
+                                </li>
+                            </ul>
+                        </li> -->
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="/#">
+                                <i class="far fa-clipboard"></i>Results</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="/results">
+                                        <i class="far fa-clipboard"></i>
+                                        Results</a>
+                                </li>
+                                <li>
+                                    <a href="/add-results">
+                                        <i class="fas fa-plus"></i>
+                                        Upload Results</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="/#">
+                                <i class="fas fa-user-circle"></i></i>Account</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="/auth/change-password">
+                                        <i class="far fa-edit"></i>
+                                        Change Password</a>
+                                </li>
+                                <li>
+                                    <a href="/auth/edit-profile">
+                                        <i class="fas fa-user-circle"></i>
+                                        Edit Profile</a>
+                                </li>
+                                <li>
+                                    <a href="/auth/logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        Logout</a>
                                 </li>
                             </ul>
                         </li>
@@ -156,7 +228,7 @@
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
                                     <a href="/auth/change-password">
-                                        <i class="far fa-lock-alt"></i>
+                                        <i class="far fa-edit"></i>
                                         Change Password</a>
                                 </li>
                                 <li>
