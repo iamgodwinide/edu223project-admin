@@ -231,6 +231,15 @@ router.post("/add-many-students", ensureAuthenticated, async (req, res) => {
             const newStudent = { ...student, department: department.toUpperCase(), level, matno: student.matno.toUpperCase() };
             if (!newStudent.firstname || !newStudent.lastname || !newStudent.email || !newStudent.password || !newStudent.phone || !newStudent.matno) {
                 failed_counter += 1;
+                if ((index + 1) === jsonArray.length) {
+                    req.flash("success_msg", `Operation completed \n Total registered: ${success_counter}, \n Already Exists: ${exists_counter} \n Failed registered: ${failed_counter}.`);
+                    fs.unlink(csvFilePath, (err) => {
+                        if (err) {
+                            throw err;
+                        }
+                        return res.redirect("/add-students");
+                    });
+                }
             } else {
 
                 const email_exists = await User.findOne({ email: newStudent.email.toLowerCase() });
@@ -246,16 +255,18 @@ router.post("/add-many-students", ensureAuthenticated, async (req, res) => {
                     const studentDoc = new User(newStudent);
                     await studentDoc.save();
                     success_counter += 1;
+
                 }
-            }
-            if ((index + 1) === jsonArray.length) {
-                req.flash("success_msg", `Operation completed, Total registered: ${success_counter}, Already Exists: ${exists_counter}, Failed registered: ${failed_counter}.`);
-                fs.unlink(csvFilePath, (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                    return res.redirect("/add-students");
-                });
+
+                if ((index + 1) === jsonArray.length) {
+                    req.flash("success_msg", `Operation completed \n Total registered: ${success_counter}, \n Already Exists: ${exists_counter} \n Failed registered: ${failed_counter}.`);
+                    fs.unlink(csvFilePath, (err) => {
+                        if (err) {
+                            throw err;
+                        }
+                        return res.redirect("/add-students");
+                    });
+                }
             }
         });
     } catch (err) {
