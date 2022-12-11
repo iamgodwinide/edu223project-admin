@@ -172,7 +172,7 @@ router.post("/add-one-student", ensureAuthenticated, async (req, res) => {
             matno: matno.toUpperCase(),
             level,
             phone,
-            email
+            email: email.toLowerCase()
         };
 
         const salt = await bcrypt.genSalt(10);
