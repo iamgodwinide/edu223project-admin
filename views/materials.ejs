@@ -20,7 +20,9 @@
                                 <% materials.map(m=> {%>
                                     <tr>
                                         <td class="text-left">
-                                            <%= m.name %>
+                                            <a href="/delete-material/<%= m.file %>">
+                                                <%= m.name %>
+                                            </a>
                                         </td>
                                         <td class="text-left">
                                             <%= m.department %>
