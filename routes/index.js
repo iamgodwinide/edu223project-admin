@@ -99,7 +99,7 @@ router.post("/students/:id", ensureAuthenticated, async (req, res) => {
             lastname,
             level,
             phone,
-            email
+            email: email.toLowerCase()
         };
 
         if (password) {
@@ -233,7 +233,7 @@ router.post("/add-many-students", ensureAuthenticated, async (req, res) => {
                 failed_counter += 1;
             } else {
 
-                const email_exists = await User.findOne({ email: newStudent.email });
+                const email_exists = await User.findOne({ email: newStudent.email.toLowerCase() });
                 const matno_exists = await User.findOne({ matno: newStudent.matno });
 
                 if (email_exists || matno_exists) {
