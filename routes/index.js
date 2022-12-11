@@ -308,6 +308,17 @@ router.post("/add-material", ensureAuthenticated, async (req, res) => {
     }
 })
 
+router.get("/delete-material/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Material.deleteOne({ _id: id });
+        req.flash("success_msg", "Material Deleted Successfully");
+        return res.redirect("/materials")
+    } catch (err) {
+        return res.redirect("/materials")
+    }
+})
+
 router.get("/departments", ensureAuthenticated, (req, res) => {
     try {
         return res.render("departments", { page_title: "EDUSOP | Departments", req });
